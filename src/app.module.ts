@@ -15,14 +15,13 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { CategoriesModule } from './categories/categories.module';
 import { AdminModule } from './admin/admin.module';
 
+
 @Module({
   imports: [
-    //  LOAD ENV FIRST
     ConfigModule.forRoot({
       isGlobal: true,
     }),
 
-    //  SAFE DB CONNECTION
     SequelizeModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -30,16 +29,16 @@ import { AdminModule } from './admin/admin.module';
         host: config.get<string>('DB_HOST'),
         port: Number(config.get('DB_PORT')),
         username: config.get<string>('DB_USER'),
-        password: config.get<string>('DB_PASS'), // ✅ NOW STRING
+        password: config.get<string>('DB_PASS'),
         database: config.get<string>('DB_NAME'),
         models: [User, Role, Movie, MovieCategory, Review],
         autoLoadModels: true,
-        synchronize: true,
+        synchronize: true, // Keep this true for dev
+        sync: { alter: true }, // 🚀 This adds missing columns to existing tables
         logging: false,
       }),
     }),
 
-    // FEATURE MODULES
     AuthModule,
     UsersModule,
     MoviesModule,

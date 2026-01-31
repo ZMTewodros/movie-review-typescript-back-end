@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { AdminService } from './admin.service';
 
-@Controller('admin')
+@Controller('admin') // The base path
 export class AdminController {
-  constructor(private adminService: AdminService) {}
+  constructor(private readonly adminService: AdminService) {}
 
-  @Get()
-  getAdminData() {
-    return this.adminService.getAdminData();
+  @Get('stats') // The sub-path -> result: /admin/stats
+  async getDashboardStats() {
+    return this.adminService.getStats();
   }
 }

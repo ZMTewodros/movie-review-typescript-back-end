@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../models/user.model';
-
+import { Role } from '../models/role.model';
 @Injectable()
 export class UsersService {
   constructor(
@@ -9,7 +9,7 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    return this.userModel.findAll();
+    return this.userModel.findAll({ include: [Role] });
   }
 
   async findOne(id: number) {
