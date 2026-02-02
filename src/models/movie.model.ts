@@ -10,7 +10,6 @@ export class Movie extends Model {
   @Column({ type: DataType.INTEGER }) year!: number;
   @Column({ type: DataType.STRING }) image!: string;
 
-  // Added for the Rating Distribution Chart
   @Column({ 
     type: DataType.FLOAT, 
     defaultValue: 0 
@@ -18,8 +17,12 @@ export class Movie extends Model {
   avgRating!: number;
 
   @ForeignKey(() => MovieCategory)
-  @Column({ type: DataType.INTEGER }) categoryId!: number;
+  @Column({ type: DataType.INTEGER }) 
+  categoryId!: number;
 
-  @BelongsTo(() => MovieCategory) category!: MovieCategory;
-  @HasMany(() => Review) reviews!: Review[];
+  @BelongsTo(() => MovieCategory) 
+  category!: MovieCategory;
+
+  @HasMany(() => Review) 
+  reviews!: Review[];
 }
